@@ -1,12 +1,13 @@
-export function constructEmbed(bot, voter) {
+import {tggUser} from "./structs/tggUser";
+
+export function constructEmbed(bot, voter: tggUser) {
     return {
-        content: `<@${bot.id}>`,
+        content: `<@${voter.id}>`,
         embeds: [
             {
                 color: 11730954,
                 title: '<:topgg:918280202398875758> Top.gg | Discord Bot List',
-
-                description: 'description',
+                description: '',
 
                 timestamp: new Date()
             },

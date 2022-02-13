@@ -4,11 +4,13 @@ import helmet from "helmet";
 import 'dotenv/config';
 import {constructEmbed} from "./modules";
 import fetch from 'node-fetch';
+import {tggUser} from "./structs/tggUser";
 
 //env variables
 const apiPort: string = process.env.WEB_PORT;
 const authSecret: string = process.env.WH_AUTHORIZATION;
 const tggRoute: string = process.env.WH_ROUTE;
+const tggToken: string = process.env.topGG_TOKEN;
 const discordWebhook = process.env.DC_WEBHOOK;
 
 //create express web-app
@@ -19,14 +21,19 @@ const tggHook = new topGG.Webhook(authSecret);
 
 //POST route to receive topGG votes
 app.post(tggRoute, tggHook.listener(vote => {
-    fetch(discordWebhook, {
-        method: "POST",
+    fetch(`https://top.gg/api/users/${vote.user}`, {
+        method: "GET",
         headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify(constructEmbed(vote.bot, vote.user))
-    }).then(res => {
-        console.log(res);
+            'Authorization': tggToken
+        }
+    }).then(function (user: tggUser) {
+        fetch(discordWebhook, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(constructEmbed(vote.bot, user))
+        })
     })
 }))
 
