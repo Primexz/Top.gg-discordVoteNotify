@@ -7,7 +7,7 @@ export function constructEmbed(bot, voter: tggUser) {
             {
                 color: 11730954,
                 title: '<:topgg:918280202398875758> Top.gg | Discord Bot List',
-                description: `\`${voter.username}#${voter.discriminator}\` [voted](https://top.gg/bot/${bot}) bot: <@${bot}>`,
+                description: `\`${voter.username}#${voter.discriminator}\` [voted](https://top.gg/bot/${bot}) bot: <@${bot}>\n\n❤️❤️`,
                 thumbnail: {
                     url: `https://cdn.discordapp.com/avatars/${voter.id}/${voter.avatar}.webp`
                 },
