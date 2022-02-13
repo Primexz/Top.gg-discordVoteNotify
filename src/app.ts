@@ -26,15 +26,16 @@ app.post(tggRoute, tggHook.listener(vote => {
         headers: {
             'Authorization': tggToken
         }
-    }).then(function (user: tggUser) {
-        fetch(discordWebhook, {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(constructEmbed(vote.bot, user))
+    }).then(res => res.text())
+        .then(function (user: tggUser) {
+            fetch(discordWebhook, {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(constructEmbed(vote.bot, user))
+            })
         })
-    })
 }))
 
 //start express
