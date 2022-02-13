@@ -27,13 +27,13 @@ app.post(tggRoute, tggHook.listener(vote => {
             'Authorization': tggToken
         }
     }).then(res => res.text())
-        .then(function (user: tggUser) {
+        .then(function (user: string) {
             fetch(discordWebhook, {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(constructEmbed(vote.bot, user))
+                body: JSON.stringify(constructEmbed(vote.bot, <tggUser>JSON.parse(user)))
             })
         })
 }))
